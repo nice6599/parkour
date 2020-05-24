@@ -1,5 +1,6 @@
 package com.hackclub.hackcraft.parkour.commands;
 
+import java.util.Optional;
 import com.hackclub.hackcraft.parkour.ParkourPlugin;
 import com.hackclub.hackcraft.parkour.objects.ParkourMap;
 import com.hackclub.hackcraft.parkour.utils.Util;
@@ -10,8 +11,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Optional;
 
 public class ParkourAdminCommand implements CommandExecutor {
 
@@ -49,9 +48,9 @@ public class ParkourAdminCommand implements CommandExecutor {
             sender.sendMessage("Checkpoints: ");
             for (int i = 0; i < pm.get().getCheckpoints().size(); i++) {
                 Location l = pm.get().getCheckpoints().get(i);
-                
+
                 plugin.getLogger().info(String.valueOf(l.distance(sender.getLocation())));
-                
+
                 if (l.distance(sender.getLocation()) < 5) {
                     sender.sendMessage(ChatColor.GREEN + String.valueOf(i) + ": " + ChatColor.BLUE + Util.locationToChat(l) + ChatColor.GREEN + " (You are next to this one!)");
                     continue;
