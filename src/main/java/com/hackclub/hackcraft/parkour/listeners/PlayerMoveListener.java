@@ -48,6 +48,7 @@ public class PlayerMoveListener implements Listener {
             }
 
             if (p.getEnd().getBlock().equals(blockLocation) && actualBlockChange) {
+                ParkourEndEvent ce = new ParkourEndEvent(e.getPlayer(), p.getId(), p.getName());
                 // TODO: add event for end
             }
         }
