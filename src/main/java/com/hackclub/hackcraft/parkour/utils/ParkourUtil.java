@@ -52,6 +52,7 @@ public class ParkourUtil {
     public ArrayList<ParkourMap> loadParkourMaps() {
         parkourMaps.clear();
 
+
         ((MemorySection) parkourFile.get("parkours")).getValues(true).forEach((k, v) -> {
             ParkourMap pm = (ParkourMap) v;
             if (pm.getSpawn() == null) {
