@@ -1,6 +1,7 @@
 package com.hackclub.hackcraft.parkour.objects;
 
 import com.hackclub.hackcraft.parkour.ParkourPlugin;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class ParkourRun {
@@ -49,7 +50,13 @@ public class ParkourRun {
         this.time = (this.endTime - this.startTime);
     }
 
-    public void setLastCheckpoint(int newCheckpoint) {
-        this.lastCheckpoint = newCheckpoint;
+    public void setLastCheckpoint(int index) {
+        this.lastCheckpoint = index;
     }
+
+    public boolean gotoLastCheckpoint() {
+        Location lastCheckpointLocation = this.map.getCheckpointLocation(this.lastCheckpoint);
+        return this.player.teleport(lastCheckpointLocation);
+    }
+
 }
