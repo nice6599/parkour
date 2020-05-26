@@ -1,5 +1,6 @@
 package com.hackclub.hackcraft.parkour.listeners;
 
+import com.hackclub.hackcraft.parkour.objects.ParkourMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -9,7 +10,7 @@ public class ParkourStartEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Player player;
 
-    public ParkourStartEvent(Player player, String id, String name) {
+    public ParkourStartEvent(Player player, ParkourMap map) {
     }
 
     public Player getPlayer() {
