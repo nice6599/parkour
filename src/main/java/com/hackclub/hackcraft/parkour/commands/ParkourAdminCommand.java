@@ -229,46 +229,6 @@ public class ParkourAdminCommand implements CommandExecutor {
                 return false;
 
 
-            case "setpos1":
-                pm = plugin.parkourUtil.getFromID(args[1]);
-
-                if (!pm.isPresent()) {
-                    sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
-                    return true;
-                }
-                pm2 = pm.get();
-                if (args.length == 2) {
-
-                    pm2.setPos1(sender.getLocation().getBlock().getLocation());
-                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
-
-                        sender.sendMessage(ChatColor.GREEN + "Bounding Box Position 1 set at"
-                                + sender.getLocation().getBlock().getLocation().toString());
-                        return true;
-                    }
-                }
-                return false;
-
-            case "setpos2":
-                pm = plugin.parkourUtil.getFromID(args[1]);
-
-                if (!pm.isPresent()) {
-                    sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
-                    return true;
-                }
-                pm2 = pm.get();
-                if (args.length == 2) {
-
-                    pm2.setPos2(sender.getLocation().getBlock().getLocation());
-                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
-                        sender.sendMessage(ChatColor.GREEN + "Bounding Box Position 2 set at"
-                                + sender.getLocation().getBlock().getLocation().toString());
-                        return true;
-                    }
-                }
-                return false;
-
-
             default:
                 return false;
         }
