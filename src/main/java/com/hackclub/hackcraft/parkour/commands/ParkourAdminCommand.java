@@ -226,6 +226,11 @@ public class ParkourAdminCommand implements CommandExecutor {
                 return false;
 
 
+            case "setpos1":
+                if (args.length == 4) {
+                }
+                return false;
+
 
             default:
                 return false;
