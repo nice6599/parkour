@@ -54,10 +54,6 @@ public class ParkourAdminCommand implements CommandExecutor {
                         "End at " + ChatColor.BLUE + Util.locationToChat(pm.get().getEnd()));
                 sender.sendMessage(
                         "Spawn at " + ChatColor.BLUE + Util.locationToChat(pm.get().getSpawn()));
-                sender.sendMessage("Bounding box positon 1 at " + ChatColor.BLUE
-                        + Util.locationToChat(pm.get().getPos1()));
-                sender.sendMessage("Bounding box positon 2 at " + ChatColor.BLUE
-                        + Util.locationToChat(pm.get().getPos2()));
                 sender.sendMessage("Checkpoints: ");
                 for (int i = 0; i < pm.get().getCheckpoints().size(); i++) {
                     Location l = pm.get().getCheckpoints().get(i);
@@ -159,8 +155,7 @@ public class ParkourAdminCommand implements CommandExecutor {
 
 
             case "setstart":
-
-
+                // used for setting the start of a parkour map
                 pm = plugin.parkourUtil.getFromID(args[1]);
 
                 if (!pm.isPresent()) {
@@ -183,7 +178,7 @@ public class ParkourAdminCommand implements CommandExecutor {
 
 
             case "setend":
-
+                // used for setting the end of a parkour map
 
                 pm = plugin.parkourUtil.getFromID(args[1]);
 
@@ -207,6 +202,7 @@ public class ParkourAdminCommand implements CommandExecutor {
                 return false;
 
             case "setspawn":
+                // used for setting the spawnpoint for a parkour map
 
                 pm = plugin.parkourUtil.getFromID(args[1]);
 

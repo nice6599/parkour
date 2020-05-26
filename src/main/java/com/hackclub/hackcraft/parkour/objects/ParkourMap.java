@@ -31,9 +31,6 @@ public class ParkourMap implements ConfigurationSerializable {
         this.start = Location.deserialize((Map<String, Object>) serializedParkourMap.get("start"));
         this.end = Location.deserialize((Map<String, Object>) serializedParkourMap.get("end"));
         this.spawn = Location.deserialize((Map<String, Object>) serializedParkourMap.get("spawn"));
-        this.pos1 = Location.deserialize((Map<String, Object>) serializedParkourMap.get("pos1"));
-        this.pos2 = Location.deserialize((Map<String, Object>) serializedParkourMap.get("pos2"));
-
 
         ArrayList<Map<String, Object>> mappedCheckpoints =
                 (ArrayList<Map<String, Object>>) serializedParkourMap.get("checkpoints");
@@ -52,8 +49,6 @@ public class ParkourMap implements ConfigurationSerializable {
         serializer.put("start", start.serialize());
         serializer.put("end", end.serialize());
         serializer.put("spawn", spawn.serialize());
-        serializer.put("pos1", pos1.serialize());
-        serializer.put("pos2", pos2.serialize());
 
 
 
@@ -78,14 +73,6 @@ public class ParkourMap implements ConfigurationSerializable {
 
     public Location getSpawn() {
         return spawn;
-    }
-
-    public Location getPos1() {
-        return pos1;
-    }
-
-    public Location getPos2() {
-        return pos2;
     }
 
     public String getName() {
@@ -125,14 +112,6 @@ public class ParkourMap implements ConfigurationSerializable {
 
     public void setSpawn(Location spawn) {
         this.spawn = spawn;
-    }
-
-    public void setPos1(Location pos1) {
-        this.pos1 = pos1;
-    }
-
-    public void setPos2(Location pos2) {
-        this.pos2 = pos2;
     }
 
     public ArrayList<Location> getCheckpoints() {
