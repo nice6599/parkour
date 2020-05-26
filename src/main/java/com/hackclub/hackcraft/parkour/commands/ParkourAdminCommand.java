@@ -25,11 +25,6 @@ public class ParkourAdminCommand implements CommandExecutor {
 
         Player sender = (Player) commandSender;
 
-        if (!sender.isOp()) {
-            commandSender.sendMessage(ChatColor.RED + "Apologies, you can't do that!");
-            return true;
-        }
-
         if (args.length < 2) {
             sender.sendMessage(ChatColor.YELLOW + "You need more arguments!");
             return true;
