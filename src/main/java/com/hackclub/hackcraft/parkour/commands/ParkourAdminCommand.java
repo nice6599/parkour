@@ -4,13 +4,13 @@ import java.util.Optional;
 import com.hackclub.hackcraft.parkour.ParkourPlugin;
 import com.hackclub.hackcraft.parkour.objects.ParkourMap;
 import com.hackclub.hackcraft.parkour.utils.Util;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import net.md_5.bungee.api.ChatColor;
 
 public class ParkourAdminCommand implements CommandExecutor {
 
@@ -30,8 +30,10 @@ public class ParkourAdminCommand implements CommandExecutor {
             return true;
         }
 
+        // define global variables
         Optional<ParkourMap> pm = null;
         ParkourMap pm2 = null;
+
 
 
         switch (args[0].toLowerCase()) {
@@ -50,6 +52,12 @@ public class ParkourAdminCommand implements CommandExecutor {
                         "Start at " + ChatColor.BLUE + Util.locationToChat(pm.get().getStart()));
                 sender.sendMessage(
                         "End at " + ChatColor.BLUE + Util.locationToChat(pm.get().getEnd()));
+                sender.sendMessage(
+                        "Spawn at " + ChatColor.BLUE + Util.locationToChat(pm.get().getSpawn()));
+                sender.sendMessage("Bounding box positon 1 at " + ChatColor.BLUE
+                        + Util.locationToChat(pm.get().getPos1()));
+                sender.sendMessage("Bounding box positon 2 at " + ChatColor.BLUE
+                        + Util.locationToChat(pm.get().getPos2()));
                 sender.sendMessage("Checkpoints: ");
                 for (int i = 0; i < pm.get().getCheckpoints().size(); i++) {
                     Location l = pm.get().getCheckpoints().get(i);
@@ -222,7 +230,41 @@ public class ParkourAdminCommand implements CommandExecutor {
 
 
             case "setpos1":
-                if (args.length == 4) {
+                pm = plugin.parkourUtil.getFromID(args[1]);
+
+                if (!pm.isPresent()) {
+                    sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
+                    return true;
+                }
+                pm2 = pm.get();
+                if (args.length == 2) {
+
+                    pm2.setPos1(sender.getLocation().getBlock().getLocation());
+                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
+
+                        sender.sendMessage(ChatColor.GREEN + "Bounding Box Position 1 set at"
+                                + sender.getLocation().getBlock().getLocation().toString());
+                        return true;
+                    }
+                }
+                return false;
+
+            case "setpos2":
+                pm = plugin.parkourUtil.getFromID(args[1]);
+
+                if (!pm.isPresent()) {
+                    sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
+                    return true;
+                }
+                pm2 = pm.get();
+                if (args.length == 2) {
+
+                    pm2.setPos2(sender.getLocation().getBlock().getLocation());
+                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
+                        sender.sendMessage(ChatColor.GREEN + "Bounding Box Position 2 set at"
+                                + sender.getLocation().getBlock().getLocation().toString());
+                        return true;
+                    }
                 }
                 return false;
 
