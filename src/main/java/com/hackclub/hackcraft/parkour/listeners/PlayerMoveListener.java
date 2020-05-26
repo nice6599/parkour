@@ -3,7 +3,7 @@ package com.hackclub.hackcraft.parkour.listeners;
 import com.hackclub.hackcraft.parkour.ParkourPlugin;
 import com.hackclub.hackcraft.parkour.events.CheckpointEvent;
 import com.hackclub.hackcraft.parkour.objects.ParkourMap;
-import com.hackclub.hackcraft.parkour.utils.ParkourUtil;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -43,10 +43,12 @@ public class PlayerMoveListener implements Listener {
             }
 
             if (p.getStart().getBlock().equals(blockLocation) && actualBlockChange) {
+                ParkourStartEvent ce = new ParkourStartEvent(e.getPlayer(), p.getId(), p.getName());
                 // TODO: add event for start
             }
 
             if (p.getEnd().getBlock().equals(blockLocation) && actualBlockChange) {
+                ParkourEndEvent ce = new ParkourEndEvent(e.getPlayer(), p.getId(), p.getName());
                 // TODO: add event for end
             }
         }
