@@ -35,10 +35,14 @@ public class ParkourAdminCommand implements CommandExecutor {
             return true;
         }
 
+        Optional<ParkourMap> pm = null;
+        ParkourMap pm2 = null;
+
+
         switch (args[0].toLowerCase()) {
 
             case "details":
-                Optional<ParkourMap> pm = plugin.parkourUtil.getFromID(args[1]);
+                pm = plugin.parkourUtil.getFromID(args[1]);
 
                 if (!pm.isPresent()) {
                     sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
@@ -69,22 +73,25 @@ public class ParkourAdminCommand implements CommandExecutor {
                 }
                 return true;
 
+
             // admin wants to make new parkour
             case "new":
                 // args[1] is id, args[2] is name
-                ParkourMap pm = new ParkourMap(args[1], args[2]);
+                pm2 = new ParkourMap(args[1], args[2]);
 
-                pm.setStart(sender.getLocation().getBlock().getLocation());
-                pm.setEnd(sender.getLocation().getBlock().getLocation());
+                pm2.setStart(sender.getLocation().getBlock().getLocation());
+                pm2.setEnd(sender.getLocation().getBlock().getLocation());
 
 
-                if (plugin.parkourUtil.saveParkourMap(pm)) {
+                if (plugin.parkourUtil.saveParkourMap(pm2)) {
                     sender.sendMessage(ChatColor.GREEN + "Parkour map successfully created!");
                     return true;
                 }
 
                 sender.sendMessage(ChatColor.RED + "Sorry! It didn't save :(");
                 return false;
+
+
 
             case "adch":
                 // admin wants to add checkpoint
@@ -93,14 +100,14 @@ public class ParkourAdminCommand implements CommandExecutor {
                 // facing down
                 Block standingIn = sender.getLocation().getBlock();
 
-                Optional<ParkourMap> pm = plugin.parkourUtil.getFromID(args[1]);
+                pm = plugin.parkourUtil.getFromID(args[1]);
 
                 if (!pm.isPresent()) {
                     sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
                     return true;
                 }
 
-                ParkourMap pm2 = pm.get();
+                pm2 = pm.get();
 
                 if (args.length == 3) {
                     // we've specified a before
@@ -123,17 +130,18 @@ public class ParkourAdminCommand implements CommandExecutor {
                 return false;
 
 
+
             case "rmch":
                 // admin wants to remove checkpoint
 
-                Optional<ParkourMap> pm = plugin.parkourUtil.getFromID(args[1]);
+                pm = plugin.parkourUtil.getFromID(args[1]);
 
                 if (!pm.isPresent()) {
                     sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
                     return true;
                 }
 
-                ParkourMap pm2 = pm.get();
+                pm2 = pm.get();
 
                 if (pm2.removeCheckpoint(Integer.parseInt(args[2]))
                         && plugin.parkourUtil.saveParkourMap(pm2)) {
@@ -142,7 +150,64 @@ public class ParkourAdminCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage(ChatColor.RED + "Error while removing checkpoint!");
                     return true;
+
                 }
+
+
+            case "setstart":
+
+
+                pm = plugin.parkourUtil.getFromID(args[1]);
+
+                if (!pm.isPresent()) {
+                    sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
+                    return true;
+                }
+
+                pm2 = pm.get();
+
+                if (args.length == 2) {
+                    // we've specified a before
+                    pm2.setStart(sender.getLocation().getBlock().getLocation());
+                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
+                        sender.sendMessage(ChatColor.GREEN + "New startpoint set!");
+                        return true;
+                    }
+                }
+
+                sender.sendMessage(
+                        ChatColor.RED + "An error occured whilst trying to add your checkpoint!");
+                return false;
+
+
+
+            case "setend":
+
+
+                pm = plugin.parkourUtil.getFromID(args[1]);
+
+                if (!pm.isPresent()) {
+                    sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
+                    return true;
+                }
+
+                pm2 = pm.get();
+
+                if (args.length == 2) {
+                    // we've specified a before
+                    pm2.setEnd(sender.getLocation().getBlock().getLocation());
+                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
+                        sender.sendMessage(ChatColor.GREEN + "New endpoint set!");
+                        return true;
+                    }
+                }
+
+                sender.sendMessage(
+                        ChatColor.RED + "An error occured whilst trying to add your checkpoint!");
+                return false;
+
+
+
             default:
                 return false;
         }
