@@ -14,9 +14,6 @@ public class ParkourMap implements ConfigurationSerializable {
     private Location end;
     private Location spawn;
 
-    // two corner postions for our bounding box
-    private Location pos1;
-    private Location pos2;
     private ArrayList<Location> checkpoints;
 
     public ParkourMap(String id, String name) {
