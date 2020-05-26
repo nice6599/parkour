@@ -9,7 +9,7 @@ public class ParkourRun {
     private Player player;
 
     private ParkourMap map = null;
-    private String lastCheckpoint = null;
+    private int lastCheckpoint = null;
     private long startTime = 0;
     private long endTime = 0;
     private long time = 0;
@@ -32,7 +32,7 @@ public class ParkourRun {
         return this.time;
     }
 
-    public String getLastCheckpoint() {
+    public int getLastCheckpoint() {
         return this.lastCheckpoint;
     }
 
@@ -49,7 +49,7 @@ public class ParkourRun {
         this.time = (this.endTime - this.startTime);
     }
 
-    public void setLastCheckpoint(String newCheckpoint) {
+    public void setLastCheckpoint(int newCheckpoint) {
         this.lastCheckpoint = newCheckpoint;
     }
 }
