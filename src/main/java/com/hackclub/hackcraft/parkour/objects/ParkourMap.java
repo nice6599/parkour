@@ -1,12 +1,10 @@
 package com.hackclub.hackcraft.parkour.objects;
 
-import org.bukkit.Location;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.bukkit.Location;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class ParkourMap implements ConfigurationSerializable {
 
@@ -14,6 +12,7 @@ public class ParkourMap implements ConfigurationSerializable {
     private String name;
     private Location start;
     private Location end;
+    private Location spawn;
     private ArrayList<Location> checkpoints;
 
     public ParkourMap(String id, String name) {
@@ -27,8 +26,10 @@ public class ParkourMap implements ConfigurationSerializable {
         this.name = (String) serializedParkourMap.get("name");
         this.start = Location.deserialize((Map<String, Object>) serializedParkourMap.get("start"));
         this.end = Location.deserialize((Map<String, Object>) serializedParkourMap.get("end"));
+        this.spawn = Location.deserialize((Map<String, Object>) serializedParkourMap.get("spawn"));
 
-        ArrayList<Map<String, Object>> mappedCheckpoints = (ArrayList<Map<String, Object>>) serializedParkourMap.get("checkpoints");
+        ArrayList<Map<String, Object>> mappedCheckpoints =
+                (ArrayList<Map<String, Object>>) serializedParkourMap.get("checkpoints");
         this.checkpoints = new ArrayList<>();
         mappedCheckpoints.forEach((c) -> this.checkpoints.add(Location.deserialize(c)));
     }
@@ -43,6 +44,7 @@ public class ParkourMap implements ConfigurationSerializable {
         serializer.put("name", name);
         serializer.put("start", start.serialize());
         serializer.put("end", end.serialize());
+        serializer.put("spawn", spawn.serialize());
 
         // serialize arraylist of checkpoints
         ArrayList<Map<String, Object>> checkpointsSerialized = new ArrayList<>();
@@ -61,6 +63,10 @@ public class ParkourMap implements ConfigurationSerializable {
 
     public Location getEnd() {
         return end;
+    }
+
+    public Location getSpawn() {
+        return spawn;
     }
 
     public String getName() {
@@ -96,6 +102,10 @@ public class ParkourMap implements ConfigurationSerializable {
 
     public void setEnd(Location end) {
         this.end = end;
+    }
+
+    public void setSpawn(Location spawn) {
+        this.spawn = spawn;
     }
 
     public ArrayList<Location> getCheckpoints() {
