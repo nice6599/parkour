@@ -94,6 +94,15 @@ public class ParkourMap implements ConfigurationSerializable {
         return id;
     }
 
+    public Location getCheckpointLocation(int index) {
+        try {
+            return checkpoints.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+
+    }
+
 
     public boolean addCheckpoint(Location toAdd) {
         return checkpoints.add(toAdd);
