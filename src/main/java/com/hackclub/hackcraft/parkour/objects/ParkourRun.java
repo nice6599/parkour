@@ -10,7 +10,7 @@ public class ParkourRun {
     private Player player;
 
     private ParkourMap map = null;
-    private int lastCheckpoint = null;
+    private int lastCheckpoint = 0;
     private long startTime = 0;
     private long endTime = 0;
     private long time = 0;

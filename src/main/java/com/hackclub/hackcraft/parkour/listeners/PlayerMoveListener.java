@@ -2,8 +2,9 @@ package com.hackclub.hackcraft.parkour.listeners;
 
 import com.hackclub.hackcraft.parkour.ParkourPlugin;
 import com.hackclub.hackcraft.parkour.events.CheckpointEvent;
+import com.hackclub.hackcraft.parkour.events.ParkourEndEvent;
+import com.hackclub.hackcraft.parkour.events.ParkourStartEvent;
 import com.hackclub.hackcraft.parkour.objects.ParkourMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -22,10 +23,13 @@ public class PlayerMoveListener implements Listener {
     public void onPlayerMoveMoreThanOneBlock(PlayerMoveEvent e) {
         // for each checkpoint
 
-        // i'm about 90% sure that this is a really awful way to do this but i am tired and it will work
+        // i'm about 90% sure that this is a really awful way to do this but i am tired and it will
+        // work
         boolean found = false;
         Location blockLocation = e.getTo().getBlock().getLocation();
-        boolean actualBlockChange = e.getFrom().getBlockX() != e.getTo().getBlockX() || e.getFrom().getBlockY() != e.getTo().getBlockY() || e.getFrom().getBlockZ() != e.getTo().getBlockZ();
+        boolean actualBlockChange = e.getFrom().getBlockX() != e.getTo().getBlockX()
+                || e.getFrom().getBlockY() != e.getTo().getBlockY()
+                || e.getFrom().getBlockZ() != e.getTo().getBlockZ();
 
         for (ParkourMap p : pl.parkourUtil.getParkourMaps()) {
             if (found)
@@ -33,22 +37,29 @@ public class PlayerMoveListener implements Listener {
             for (Location c : p.getCheckpoints()) {
                 if (found)
                     break;
-                // i know the checkpoint.getBlock().getLocation could be redundant, but i'm doing it so we are sure it's the exact location of the block vs the location that was put in (not sure if these are the same, will test later when cleaning up)
+                // i know the checkpoint.getBlock().getLocation could be redundant, but i'm doing it
+                // so we are sure it's the exact location of the block vs the location that was put
+                // in (not sure if these are the same, will test later when cleaning up)
                 if (c.getBlock().getLocation().equals(blockLocation) && actualBlockChange) {
                     pl.getLogger().info("checkpoint hit!");
-                    CheckpointEvent ce = new CheckpointEvent(e.getPlayer(), p.getCheckpoints().lastIndexOf(c));
+                    CheckpointEvent ce =
+                            new CheckpointEvent(e.getPlayer(), p.getCheckpoints().lastIndexOf(c));
                     Bukkit.getServer().getPluginManager().callEvent(ce);
                     found = true;
                 }
             }
 
-            if (p.getStart().getBlock().equals(blockLocation) && actualBlockChange) {
-                ParkourStartEvent ce = new ParkourStartEvent(e.getPlayer(), p.getId(), p.getName());
+            if (p.getStart().getBlock().equals(blockLocation.getBlock()) && actualBlockChange) {
+                ParkourStartEvent ce = new ParkourStartEvent(e.getPlayer(), p);
+                pl.getLogger().info("start hit!");
+
                 // TODO: add event for start
             }
 
-            if (p.getEnd().getBlock().equals(blockLocation) && actualBlockChange) {
-                ParkourEndEvent ce = new ParkourEndEvent(e.getPlayer(), p.getId(), p.getName());
+            if (p.getEnd().getBlock().equals(blockLocation.getBlock()) && actualBlockChange) {
+                ParkourEndEvent ce = new ParkourEndEvent(e.getPlayer(), p);
+                pl.getLogger().info("End hit!");
+
                 // TODO: add event for end
             }
         }

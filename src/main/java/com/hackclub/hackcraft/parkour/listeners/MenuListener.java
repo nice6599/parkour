@@ -9,15 +9,20 @@ public class MenuListener implements Listener {
 
 
     public MenuListener(ParkourPlugin parkourPlugin) {
-	}
+    }
 
-	@EventHandler
+    @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent event) {
         System.out.println(event.getAction());
         if (event.getItem() != null) {
             System.out.println(event.getItem().getType());
             System.out.println(event.getItem().getItemMeta().getDisplayName());
         }
+        switch (event.getItem().getItemMeta().getDisplayName().toLowerCase()) {
+            case "checkpoint":
+                event.getPlayer();
+        }
+
     }
 
 }
