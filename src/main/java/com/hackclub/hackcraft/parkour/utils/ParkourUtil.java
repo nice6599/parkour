@@ -1,20 +1,18 @@
 package com.hackclub.hackcraft.parkour.utils;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.logging.Level;
 import com.hackclub.hackcraft.parkour.objects.ParkourMap;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 
 public class ParkourUtil {
 
@@ -45,7 +43,8 @@ public class ParkourUtil {
     }
 
     public Optional<ParkourMap> getFromID(String id) {
-        Optional<ParkourMap> pm = getParkourMaps().stream().filter(m -> m.getId().equals(id)).findFirst();
+        Optional<ParkourMap> pm =
+                getParkourMaps().stream().filter(m -> m.getId().equals(id)).findFirst();
 
         return pm;
     }
@@ -53,7 +52,20 @@ public class ParkourUtil {
     public ArrayList<ParkourMap> loadParkourMaps() {
         parkourMaps.clear();
 
-        ((MemorySection) parkourFile.get("parkours")).getValues(true).forEach((k, v) -> parkourMaps.add((ParkourMap) v));
+        ((MemorySection) parkourFile.get("parkours")).getValues(true).forEach((k, v) -> {
+            ParkourMap pm = (ParkourMap) v;
+            if (pm.getSpawn() == null) {
+                pm.setSpawn(new Location(plugin.getServer().getWorld("world"), 0, 0, 0));
+                if (saveParkourMap(pm)) {
+                    plugin.getLogger().log(Level.INFO,
+                            "New Spawnpoint Created for " + pm.getName());
+                } else {
+                    plugin.getLogger().log(Level.WARNING, pm.getName() + " has no spawnpoint set");
+                }
+            }
+            parkourMaps.add(pm);
+
+        });
 
         return parkourMaps;
     }

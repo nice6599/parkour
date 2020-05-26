@@ -3,8 +3,11 @@ package com.hackclub.hackcraft.parkour.objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import com.hackclub.hackcraft.parkour.ParkourPlugin;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+
+
 
 public class ParkourMap implements ConfigurationSerializable {
 
@@ -15,6 +18,7 @@ public class ParkourMap implements ConfigurationSerializable {
     private Location spawn;
 
     private ArrayList<Location> checkpoints;
+    private ParkourPlugin plugin;
 
     public ParkourMap(String id, String name) {
         this.id = id;
@@ -27,12 +31,22 @@ public class ParkourMap implements ConfigurationSerializable {
         this.name = (String) serializedParkourMap.get("name");
         this.start = Location.deserialize((Map<String, Object>) serializedParkourMap.get("start"));
         this.end = Location.deserialize((Map<String, Object>) serializedParkourMap.get("end"));
-        this.spawn = Location.deserialize((Map<String, Object>) serializedParkourMap.get("spawn"));
+
 
         ArrayList<Map<String, Object>> mappedCheckpoints =
                 (ArrayList<Map<String, Object>>) serializedParkourMap.get("checkpoints");
         this.checkpoints = new ArrayList<>();
         mappedCheckpoints.forEach((c) -> this.checkpoints.add(Location.deserialize(c)));
+
+        try {
+            this.spawn =
+                    Location.deserialize((Map<String, Object>) serializedParkourMap.get("spawn"));
+        } catch (NullPointerException e) {
+            this.spawn = null;
+        }
+
+
+
     }
 
     @Override
