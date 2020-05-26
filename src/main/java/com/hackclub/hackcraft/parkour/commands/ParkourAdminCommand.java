@@ -81,6 +81,7 @@ public class ParkourAdminCommand implements CommandExecutor {
 
                 pm2.setStart(sender.getLocation().getBlock().getLocation());
                 pm2.setEnd(sender.getLocation().getBlock().getLocation());
+                pm2.setSpawn(sender.getLocation().getBlock().getLocation());
 
 
                 if (plugin.parkourUtil.saveParkourMap(pm2)) {
@@ -166,17 +167,14 @@ public class ParkourAdminCommand implements CommandExecutor {
 
                 pm2 = pm.get();
 
-                if (args.length == 2) {
-                    // we've specified a before
-                    pm2.setStart(sender.getLocation().getBlock().getLocation());
-                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
-                        sender.sendMessage(ChatColor.GREEN + "New startpoint set!");
-                        return true;
-                    }
+                pm2.setStart(sender.getLocation().getBlock().getLocation());
+                if (plugin.parkourUtil.saveParkourMap(pm2)) {
+                    sender.sendMessage(ChatColor.GREEN + "New startpoint set!");
+                    return true;
                 }
 
                 sender.sendMessage(
-                        ChatColor.RED + "An error occured whilst trying to add your checkpoint!");
+                        ChatColor.RED + "An error occured whilst trying to add your startpoint!");
                 return false;
 
 
@@ -193,17 +191,38 @@ public class ParkourAdminCommand implements CommandExecutor {
 
                 pm2 = pm.get();
 
-                if (args.length == 2) {
-                    // we've specified a before
-                    pm2.setEnd(sender.getLocation().getBlock().getLocation());
-                    if (plugin.parkourUtil.saveParkourMap(pm2)) {
-                        sender.sendMessage(ChatColor.GREEN + "New endpoint set!");
-                        return true;
-                    }
+
+                pm2.setEnd(sender.getLocation().getBlock().getLocation());
+                if (plugin.parkourUtil.saveParkourMap(pm2)) {
+                    sender.sendMessage(ChatColor.GREEN + "New endpoint set!");
+                    return true;
+                }
+
+
+                sender.sendMessage(
+                        ChatColor.RED + "An error occured whilst trying to add your endpoint!");
+                return false;
+
+            case "setspawn":
+
+                pm = plugin.parkourUtil.getFromID(args[1]);
+
+                if (!pm.isPresent()) {
+                    sender.sendMessage(ChatColor.RED + "That map doesn't exist!");
+                    return true;
+                }
+
+                pm2 = pm.get();
+
+
+                pm2.setSpawn(sender.getLocation().getBlock().getLocation());
+                if (plugin.parkourUtil.saveParkourMap(pm2)) {
+                    sender.sendMessage(ChatColor.GREEN + "New spawnpoint set!");
+                    return true;
                 }
 
                 sender.sendMessage(
-                        ChatColor.RED + "An error occured whilst trying to add your checkpoint!");
+                        ChatColor.RED + "An error occured whilst trying to add your spawnpoint!");
                 return false;
 
 
