@@ -6,21 +6,26 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class MenuListener implements Listener {
+    ParkourPlugin plugin;
+
 
 
     public MenuListener(ParkourPlugin parkourPlugin) {
+        this.plugin = parkourPlugin;
     }
 
     @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent event) {
-        System.out.println(event.getAction());
         if (event.getItem() != null) {
-            System.out.println(event.getItem().getType());
-            System.out.println(event.getItem().getItemMeta().getDisplayName());
-        }
-        switch (event.getItem().getItemMeta().getDisplayName().toLowerCase()) {
-            case "checkpoint":
-                event.getPlayer();
+
+            switch (event.getItem().getItemMeta().getDisplayName().toLowerCase()) {
+                case "checkpoint":
+                    plugin.getDataManager().getData(event.getPlayer()).getCurrentRun()
+                            .gotoLastCheckpoint();
+                    return;
+
+
+            }
         }
 
     }

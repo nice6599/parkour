@@ -3,22 +3,24 @@ package com.hackclub.hackcraft.parkour.objects;
 import com.hackclub.hackcraft.parkour.ParkourPlugin;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class ParkourRun {
 
     private ParkourPlugin plugin;
     private Player player;
 
-    private ParkourMap map = null;
-    private int lastCheckpoint = 0;
-    private long startTime = 0;
-    private long endTime = 0;
-    private long time = 0;
+    private ParkourMap map;
+    private int lastCheckpoint;
+    private long startTime;
+    private long endTime;
+    private long time;
 
-    public ParkourRun(ParkourPlugin plugin, Player player, ParkourMap map) {
-        this.plugin = plugin;
+    public ParkourRun(ParkourPlugin pl, Player player, ParkourMap map, Long startTime) {
+        this.plugin = pl;
         this.player = player;
         this.map = map;
+        this.startTime = startTime;
     }
 
     public Long getStartTime() {
@@ -56,7 +58,11 @@ public class ParkourRun {
 
     public boolean gotoLastCheckpoint() {
         Location lastCheckpointLocation = this.map.getCheckpointLocation(this.lastCheckpoint);
-        return this.player.teleport(lastCheckpointLocation);
+        return this.player.teleport(lastCheckpointLocation.clone().add(.5, .5, .5));
+    }
+
+    public Plugin getPlugin() {
+        return plugin;
     }
 
 }

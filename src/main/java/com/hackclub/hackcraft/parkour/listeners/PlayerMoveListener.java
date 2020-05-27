@@ -50,15 +50,19 @@ public class PlayerMoveListener implements Listener {
             }
 
             if (p.getStart().getBlock().equals(blockLocation.getBlock()) && actualBlockChange) {
-                ParkourStartEvent ce = new ParkourStartEvent(e.getPlayer(), p);
+                ParkourStartEvent se = new ParkourStartEvent(e.getPlayer(), p);
                 pl.getLogger().info("start hit!");
+                Bukkit.getServer().getPluginManager().callEvent(se);
+
 
                 // TODO: add event for start
             }
 
             if (p.getEnd().getBlock().equals(blockLocation.getBlock()) && actualBlockChange) {
-                ParkourEndEvent ce = new ParkourEndEvent(e.getPlayer(), p);
+                ParkourEndEvent ee = new ParkourEndEvent(e.getPlayer(), p);
                 pl.getLogger().info("End hit!");
+                Bukkit.getServer().getPluginManager().callEvent(ee);
+
 
                 // TODO: add event for end
             }

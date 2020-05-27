@@ -3,7 +3,6 @@ package com.hackclub.hackcraft.parkour.objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import com.hackclub.hackcraft.parkour.ParkourPlugin;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
@@ -18,7 +17,6 @@ public class ParkourMap implements ConfigurationSerializable {
     private Location spawn;
 
     private ArrayList<Location> checkpoints;
-    private ParkourPlugin plugin;
 
     public ParkourMap(String id, String name) {
         this.id = id;
