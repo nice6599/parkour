@@ -1,5 +1,6 @@
-package com.hackclub.hackcraft.parkour.listeners;
+package com.hackclub.hackcraft.parkour.events;
 
+import com.hackclub.hackcraft.parkour.objects.ParkourMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -7,13 +8,26 @@ import org.bukkit.event.HandlerList;
 public class ParkourEndEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private Player player;
+    private ParkourMap map;
+    private Long time;
 
 
-    public ParkourEndEvent(Player player, String id, String name) {
+    public ParkourEndEvent(Player player, ParkourMap map) {
+        this.player = player;
+        this.map = map;
+        this.time = System.nanoTime();
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public ParkourMap getMap() {
+        return map;
+    }
+
+    public Long getTime() {
+        return time;
     }
 
     public HandlerList getHandlers() {
