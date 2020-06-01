@@ -19,5 +19,7 @@ public class ParkourStartListener implements Listener {
         ParkourRun run = new ParkourRun(pl, event.getPlayer(), event.getMap(), event.getTime());
         PlayerData data = pl.getDataManager().getData(event.getPlayer());
         data.setCurrentRun(run);
+        pl.itemMenuUtil.giveItemMenu(event.getPlayer(), pl.parkourUtil.getMenu());
+
     }
 }

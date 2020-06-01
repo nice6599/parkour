@@ -1,5 +1,7 @@
 package com.hackclub.hackcraft.parkour;
 
+import com.hackclub.hackcraft.ItemMenu.ItemMenuPlugin;
+import com.hackclub.hackcraft.ItemMenu.utils.ItemMenuUtil;
 import com.hackclub.hackcraft.parkour.commands.ParkourAdminCommand;
 import com.hackclub.hackcraft.parkour.listeners.CheckpointListener;
 import com.hackclub.hackcraft.parkour.listeners.ComputerMapListener;
@@ -17,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ParkourPlugin extends JavaPlugin {
 
     public ParkourUtil parkourUtil;
+    public ItemMenuUtil itemMenuUtil;
     private DataManager dataManager;
 
     @Override
@@ -27,9 +30,10 @@ public class ParkourPlugin extends JavaPlugin {
         ConfigurationSerialization.registerClass(ParkourMap.class);
 
         // initialize custom objects
-        parkourUtil = new ParkourUtil(this);
+        this.parkourUtil = new ParkourUtil(this);
         parkourUtil.loadParkourMaps();
-        dataManager = new DataManager(this);
+        this.dataManager = new DataManager(this);
+        this.itemMenuUtil = ItemMenuPlugin.getMenuUtil();
 
 
         // register commands

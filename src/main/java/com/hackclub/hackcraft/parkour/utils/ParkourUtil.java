@@ -19,6 +19,8 @@ public class ParkourUtil {
     private Plugin plugin;
     private FileConfiguration parkourFile;
     private ArrayList<ParkourMap> parkourMaps;
+    private String menuId;
+
 
     File file;
 
@@ -28,6 +30,14 @@ public class ParkourUtil {
         file = new File(plugin.getDataFolder(), "parkour.yml");
         parkourFile = YamlConfiguration.loadConfiguration(file);
         parkourMaps = new ArrayList<ParkourMap>();
+    }
+
+    public void setMenu(String id) {
+        menuId = id;
+    }
+
+    public String getMenu() {
+        return menuId;
     }
 
     public boolean saveParkourMap(ParkourMap pm) {

@@ -17,6 +17,7 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
@@ -34,12 +35,16 @@
             <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.hackclub.hackcraft</groupId>
+            <artifactId>ItemMenu-dev</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-
 
 </project>
